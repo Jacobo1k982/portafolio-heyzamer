@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
 export default function Contact() {
@@ -9,7 +9,8 @@ export default function Contact() {
         threshold: 0.1
     })
 
-    const containerVariants = {
+    // Tipado explícito con Variants
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -17,7 +18,7 @@ export default function Contact() {
         }
     }
 
-    const itemVariants = {
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
@@ -97,7 +98,7 @@ export default function Contact() {
                     <a
                         href="https://linkedin.com/in/heyzamer-campos-447560242"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="group flex items-center gap-2 px-5 py-3 bg-gray bg-opacity-10 hover:bg-opacity-20 rounded-xl border border-blue-300 hover:border-cyan-300 transition-all duration-300 backdrop-blur-sm min-w-40"
                     >
                         <span className="text-lg group-hover:scale-110 transition-transform">💼</span>
@@ -107,7 +108,7 @@ export default function Contact() {
                     <a
                         href="mailto:heyzamercampos@gmail.com"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 min-w-44"
                     >
                         <span className="text-lg group-hover:scale-110 transition-transform">✉️</span>
