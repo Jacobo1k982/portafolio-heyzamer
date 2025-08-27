@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation, Variants } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 const education = [
@@ -20,7 +20,7 @@ const education = [
 
 // Hook para animación al hacer scroll
 function useInViewAnimation() {
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement | null>(null)
     const controls = useAnimation()
 
     useEffect(() => {
@@ -49,12 +49,21 @@ function useInViewAnimation() {
 export default function Education() {
     const { ref: sectionRef, controls: sectionControls } = useInViewAnimation()
 
-    const itemVariants = {
+    // Tipado explícito con Variants
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
             y: 0,
             transition: { duration: 0.6, ease: 'easeOut' }
+        }
+    }
+
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.3 }
         }
     }
 
@@ -85,20 +94,18 @@ export default function Education() {
                 <motion.div
                     initial="hidden"
                     animate={sectionControls}
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: { staggerChildren: 0.3 }
-                        }
-                    }}
+                    variants={containerVariants}
                     className="space-y-8"
                 >
                     {education.map((edu, i) => (
                         <motion.div
                             key={i}
                             variants={itemVariants}
-                            whileHover={{ y: -6, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                            whileHover={{
+                                y: -6,
+                                boxShadow:
+                                    '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                            }}
                             className="bg-white p-7 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300"
                         >
                             <h3 className="text-xl font-bold text-gray-800 mb-2">{edu.degree}</h3>
