@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation, Variants } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 const skills = [
@@ -17,16 +17,14 @@ const skills = [
 ]
 
 function useInViewAnimation() {
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement | null>(null)
     const controls = useAnimation()
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        controls.start("visible")
-                    }
+                    if (entry.isIntersecting) controls.start('visible')
                 })
             },
             { threshold: 0.1 }
@@ -34,7 +32,6 @@ function useInViewAnimation() {
 
         const currentRef = ref.current
         if (currentRef) observer.observe(currentRef)
-
         return () => {
             if (currentRef) observer.unobserve(currentRef)
         }
@@ -46,18 +43,18 @@ function useInViewAnimation() {
 export default function Skills() {
     const { ref: sectionRef, controls: sectionControls } = useInViewAnimation()
 
-    const itemVariants = {
+    const itemVariants: Variants = {
         hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.8 } }
+        visible: { opacity: 1, transition: { duration: 0.8 } },
     }
 
-    const cardVariants = (i) => ({
+    const cardVariants = (i: number): Variants => ({
         hidden: { opacity: 0, scale: 0.95 },
         visible: {
             opacity: 1,
             scale: 1,
-            transition: { delay: i * 0.08, duration: 0.4 }
-        }
+            transition: { delay: i * 0.08, duration: 0.4 },
+        },
     })
 
     return (
@@ -97,7 +94,7 @@ export default function Skills() {
                                 <motion.span
                                     initial={{ scale: 0.8 }}
                                     animate={{ scale: 1 }}
-                                    transition={{ delay: 0.1 + i * 0.08, type: "spring" }}
+                                    transition={{ delay: 0.1 + i * 0.08, type: 'spring' }}
                                     className="text-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
                                 >
                                     {skill.icon}
