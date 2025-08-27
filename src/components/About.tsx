@@ -1,11 +1,11 @@
 'use client'
 
-import { motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation, Variants } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 // Hook para animación al hacer scroll
 function useInViewAnimation() {
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement | null>(null)
     const controls = useAnimation()
 
     useEffect(() => {
@@ -34,12 +34,31 @@ function useInViewAnimation() {
 export default function About() {
     const { ref: sectionRef, controls: sectionControls } = useInViewAnimation()
 
-    const itemVariants = {
+    // ✅ Tipado explícito como Variants
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
             y: 0,
             transition: { duration: 0.8, ease: 'easeOut' }
+        }
+    }
+
+    // ✅ También tipamos variantes inline
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.3 }
+        }
+    }
+
+    const lineVariants: Variants = {
+        hidden: { opacity: 0, scaleX: 0 },
+        visible: {
+            opacity: 1,
+            scaleX: 1,
+            transition: { delay: 0.8, duration: 1, ease: 'easeOut' }
         }
     }
 
@@ -50,7 +69,7 @@ export default function About() {
             className="py-24 px-6 relative bg-white overflow-hidden"
             aria-labelledby="about-title"
         >
-            {/* Fondo decorativo sutil (coherente con Projects) */}
+            {/* Fondo decorativo sutil */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -left-20 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50"></div>
                 <div className="absolute top-1/2 right-0 w-96 h-96 bg-indigo-50 rounded-full blur-4xl opacity-40"></div>
@@ -72,19 +91,10 @@ export default function About() {
                 <motion.div
                     initial="hidden"
                     animate={sectionControls}
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: { staggerChildren: 0.3 }
-                        }
-                    }}
+                    variants={containerVariants}
                     className="space-y-8 text-lg text-gray-700 leading-relaxed"
                 >
-                    <motion.p
-                        variants={itemVariants}
-                        className="text-justify"
-                    >
+                    <motion.p variants={itemVariants} className="text-justify">
                         Soy{' '}
                         <strong className="text-blue-600 font-semibold">Ingeniero Eléctrico</strong>{' '}
                         con más de{' '}
@@ -96,36 +106,23 @@ export default function About() {
                         <strong className="text-blue-600 font-semibold">energías renovables</strong>.
                     </motion.p>
 
-                    <motion.p
-                        variants={itemVariants}
-                        className="text-justify"
-                    >
+                    <motion.p variants={itemVariants} className="text-justify">
                         A lo largo de mi carrera, he liderado proyectos clave en subestaciones eléctricas, redes de distribución y sistemas de control para plantas industriales. Siempre priorizo la{' '}
                         <strong>seguridad</strong>, la{' '}
                         <strong>sostenibilidad</strong> y el{' '}
                         <strong>rendimiento óptimo</strong>, aplicando estándares internacionales y tecnologías de punta.
                     </motion.p>
 
-                    <motion.p
-                        variants={itemVariants}
-                        className="text-justify"
-                    >
+                    <motion.p variants={itemVariants} className="text-justify">
                         Mi objetivo es transformar desafíos técnicos en soluciones eficientes y escalables, aportando valor a cada proyecto con una combinación de conocimiento técnico, pensamiento crítico y pasión por la ingeniería.
                     </motion.p>
                 </motion.div>
 
                 {/* Línea divisoria animada */}
                 <motion.div
-                    initial={{ opacity: 0, scaleX: 0 }}
+                    initial="hidden"
                     animate={sectionControls}
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            scaleX: 1,
-                            transition: { delay: 0.8, duration: 1, ease: 'easeOut' }
-                        }
-                    }}
+                    variants={lineVariants}
                     style={{ transformOrigin: 'center' }}
                     className="mt-16 h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"
                 />

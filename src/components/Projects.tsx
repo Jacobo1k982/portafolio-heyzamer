@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation, Variants } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 const projects = [
@@ -88,7 +88,7 @@ const projects = [
 ]
 
 function useInViewAnimation() {
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement | null>(null)
     const controls = useAnimation()
 
     useEffect(() => {
@@ -112,7 +112,7 @@ function useInViewAnimation() {
 export default function Projects() {
     const { ref: sectionRef, controls: sectionControls } = useInViewAnimation()
 
-    const itemVariants = {
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
@@ -121,7 +121,7 @@ export default function Projects() {
         }
     }
 
-    const cardVariants = (i) => ({
+    const cardVariants = (i: number): Variants => ({
         hidden: { opacity: 0, x: i % 2 === 0 ? -50 : 50 },
         visible: {
             opacity: 1,

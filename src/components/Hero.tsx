@@ -1,10 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 
 export default function Hero() {
-    // Variantes de animación
-    const containerVariants = {
+    // ✅ Tipado explícito de variantes
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -12,7 +12,7 @@ export default function Hero() {
         }
     }
 
-    const itemVariants = {
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
@@ -27,7 +27,7 @@ export default function Hero() {
         >
             {/* Fondo de circuito sutil animado */}
             <div
-                className="absolute inset-0 opacity-10 bg-[url('/images/circuit.svg')] bg-repeat opacity-10 animate-pulse"
+                className="absolute inset-0 opacity-10 bg-[url('/images/circuit.svg')] bg-repeat animate-pulse"
                 style={{
                     backgroundSize: '300px',
                     animation: 'pulse 4s ease-in-out infinite'

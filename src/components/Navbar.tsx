@@ -78,6 +78,7 @@ export default function Navbar() {
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="md:hidden text-gray-700 focus:outline-none"
+                        title={isMenuOpen ? "Close menu" : "Open menu"}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
